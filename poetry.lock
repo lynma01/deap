@@ -2770,6 +2770,18 @@ files = [
 ]
 
 [[package]]
+name = "xlsx2csv"
+version = "0.8.1"
+description = "xlsx to csv converter"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "xlsx2csv-0.8.1-py3-none-any.whl", hash = "sha256:6c36c0295d64f231570479e514d6163ce135af3c431a1705b073230bedaef9f2"},
+    {file = "xlsx2csv-0.8.1.tar.gz", hash = "sha256:7ecd6d2bc2426f2e432f4fdac12211e1976d3cbb65f9033e1eda65edda2045e3"},
+]
+
+[[package]]
 name = "zipp"
 version = "3.15.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -2788,4 +2800,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "966d700e3295dea19e97ecfcee1f6d2e42673b433ea6edc0dc764551a004b095"
+content-hash = "56d3cdcc864429992febd07864c4d38a6788a650924b4d9df2331431612b28c8"
