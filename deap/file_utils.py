@@ -1,8 +1,44 @@
 # %%
 import os
 import polars as pl
+import datetime
 from time import gmtime, strftime
+from dataclasses import dataclass, field
 
+# %%
+@dataclass
+class dfile:
+    name: str = ""
+    file_extension: str = ""
+    creation_time: str = ""
+    file_path: str = ""
+    size: int = 0
+    exists: bool = False
+    parquet_filepath: str = ""
+    is_directory: bool = False
+#    children: list = field(default_factory = list)
+    parent_dir: str = ""
+#    is_yaml: bool = False
+#    cloud: dict = field(default_factory = dict)
+    #cloud = {url: url, cloud_service: str, creds: str, cloud_path: str}
+
+#    file_timestamp: dict = field(default_factory = dict)
+    # file_timestamp = {times: {min_fnametime: timeObj, max_fnametime: timeObj}}
+
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.file_extension = os.path.basename(file_path)
+        self.size = f"{os.path.getsize(file_path) / 1000000} mb"
+        self.is_directory = os.path.isdir(file_path)
+        self.file_extension = os.path.splitext(file_path)[-1]
+        self.parent_dir = os.path.dirname(file_path)
+        self.creation_time = datetime.datetime.fromtimestamp(os.path.getctime(file_path)).strftime("%Y %m %d %H:%M:%S")
+        self.exists = os.path.exists(file_path)
+
+# %%
+dtest = dfile('../data/input/black_sea_grain_initiative_voyages_data.csv')        
+dtest_dir = dfile('../data/input/test_dir')
+# %%
 def base_ingestion(file_path: str) -> pl.DataFrame:
     """create list list of files and extensions"""
     flist = []
