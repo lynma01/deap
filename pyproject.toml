@@ -1,17 +1,14 @@
 [tool.poetry]
 name = "deap"
 version = "0.1.0"
-description = ""
-authors = ["Matthew Lyn <lynma01@gmail.com>"]
+description = "Data Exploration & Analysis Package"
+authors = ["Matthew Lyn <lynma01 at gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-rich = "^13.3.4"
-textual = "^0.20.1"
 polars = "^0.17.5"
 duckdb = "^0.7.1"
-prefect = "^2.10.4"
 ipykernel = "^6.22.0"
 xlsx2csv = "^0.8.1"
 

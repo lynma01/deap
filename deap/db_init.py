@@ -1,6 +1,6 @@
 # %%
 import duckdb
-from deap.main import confirm_deapdir
+from deap.metaseries import confirm_deapdir
 
 # %%
 def init_db() -> bool:
