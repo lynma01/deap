@@ -2,28 +2,44 @@
 import os
 import polars as pl
 import datetime
-from time import gmtime, strftime
-from dataclasses import dataclass, field
+import attrs
+
+import pathlib
 
 # %%
-@dataclass
-class dfile:
-    name: str = ""
-    file_extension: str = ""
-    creation_time: str = ""
-    file_path: str = ""
-    size: int = 0
-    exists: bool = False
-    parquet_filepath: str = ""
-    is_directory: bool = False
-#    children: list = field(default_factory = list)
-    parent_dir: str = ""
-#    is_yaml: bool = False
-#    cloud: dict = field(default_factory = dict)
-    #cloud = {url: url, cloud_service: str, creds: str, cloud_path: str}
+p = pathlib.Path("..")
+[x for x in p.iterdir() if x.is_dir()]
+# %%
+@attrs.define
+class DataFile:
+    url_path: str
+    basename: str = attrs.field(init=False) 
+    file_extension: str = attrs.field(init=False)
+    file_path: str = attrs.field(init=False)
+    size: int = attrs.field(init=False)
+    exists: bool = attrs.field(init=False)
+    is_file: bool = attrs.field(init=False)
+    is_directory: bool = attrs.field(init=False)
+    # children: list = field(default_factory = list)
+    # is_yaml: bool = False
+    # cloud: dict = field(default_factory = dict)
+    # cloud = {url: url, cloud_service: str, creds: str, cloud_path: str}
 
-#    file_timestamp: dict = field(default_factory = dict)
-    # file_timestamp = {times: {min_fnametime: timeObj, max_fnametime: timeObj}}
+    @basename.default
+    def _get_basename(self):
+        return os.path.basename(self.url_path)
+    
+    @file_extension.default
+    def _get_file_extension(self):
+        return os.path.splitext(self.url_path)[-1]
+    
+    @file_path.default
+    def _get_file_path(self):
+        return os.path.ab
+    
+    @exists.default
+    def _get_file_exists(self):
+        return os.path.exists(self.url_path)
 
     def __init__(self, file_path: str):
         self.file_path = file_path
@@ -35,9 +51,7 @@ class dfile:
         self.creation_time = datetime.datetime.fromtimestamp(os.path.getctime(file_path)).strftime("%Y %m %d %H:%M:%S")
         self.exists = os.path.exists(file_path)
 
-# %%
-dtest = dfile('../data/input/black_sea_grain_initiative_voyages_data.csv')        
-dtest_dir = dfile('../data/input/test_dir')
+
 # %%
 def base_ingestion(file_path: str) -> pl.DataFrame:
     """create list list of files and extensions"""
@@ -80,22 +94,5 @@ def clean_input_fnames(file_path: str) -> str:
     return ncase
 
 
-def split_fpath(file_path: str) -> tuple:
-    """return a tuple of file path and extension"""
-    return os.path.splitext(file_path)
-
-def parq_convr(file_list: list):
-
-    def write_pfile(df: pl.DataFrame, fpath: str, file_list: list):
-        df.write_parquet(f"{fpath}{file_list[1]}.parquet")
-    
-
-    match file_list[-2]:
-        case ['.csv']:
-            print(files)
-        case ['.xlsx']:
-            print(files)
-# %%
-testing = base_ingestion("data/input/")
 # %%
 
